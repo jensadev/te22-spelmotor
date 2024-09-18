@@ -289,6 +289,10 @@ Vi har nu skapat ett spelobjekt i `Game` och använder det för att rita färgen
 
 Om du nu öppnar sidan i webbläsaren så ska du se en röd färg som rör sig över canvasen.
 
+#### Utmaning
+
+Skapa en grön färg som rör sig över canvasen.
+
 ### Skapa flera spelobjekt
 
 Vi kan nu skapa flera spelobjekt och rita dem på canvasen.
