@@ -394,3 +394,22 @@ Om du nu öppnar sidan i webbläsaren så ska du se tre färger som rör sig öv
 #### Utmaning
 
 Skapa och studsa spelobjekt på y-axeln.
+
+## Sammanfattning
+
+Vi har nu skapat grunden för ett spel med canvas. Vi har skapat en klass `Game` som hanterar spelet och en klass för att hantera spelobjekt. Vi har använt `requestAnimationFrame` för att uppdatera och rita spelet. Vi har också använt en klass för att kunna skapa flera spelobjekt som rör sig över canvasen.
+
+### Fundera
+
+- Hur skulle du kunna använda `GameObject` för att skapa olika typer av spelobjekt?
+- Vad är de viktiga parametrarna för att skapa ett spelobjekt? Vad krävs?
+
+### Utmaning
+
+Skapa en klass för att hantera spelobjekt som rör sig slumpmässigt över canvasen. Du kan använda dig av `Math.random()` för att skapa slumpmässiga värden för `x` och `y`.
+
+### Nästa steg
+
+I nästa steg kommer vi att lägga till en spelare som kan styras med piltangenterna. Vi kommer att göra det genom att skapa en `Player`-klass som hanterar spelaren och en `Input`-klass som hanterar input från tangentbordet.
+
+För att hålla dessa steg separata så kommer vi att skapa en ny branch för nästa steg. `player-input`.
