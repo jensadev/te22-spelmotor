@@ -1,9 +1,20 @@
 import GameObject from "./GameObject.js"
+import InputHandler from "./InputHandler.js"
+import Player from "./Player.js"
 
 export default class Game {
   constructor(width, height) {
     this.width = width
     this.height = height
+
+    this.input = new InputHandler(this)
+
+    this.keys = new Set()
+    this.debug = false
+
+    this.player = new Player(this)
+
+
     this.gameObjects = [
       new GameObject(0, 100, 20, 20, '#f00', 100),
       new GameObject(0, 200, 20, 20, '#0f0', 200),
@@ -17,11 +28,15 @@ export default class Game {
       if (gameObject.x > this.width) gameObject.direction = -1
       if (gameObject.x < 0) gameObject.direction = 1
     })
+
+    this.player.update(deltaTime)
   }
 
   draw(ctx) {
     this.gameObjects.forEach(gameObject => {
       gameObject.draw(ctx)
     })
+
+    this.player.draw(ctx)
   }
 }
