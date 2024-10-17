@@ -1,19 +1,30 @@
-import GameObject from './GameObject'
+import GameObject from "./GameObject"
 
 export default class Player extends GameObject {
   constructor(game) {
-    super(0, 0, 50, 50, '#fff', 10)
+    super(0, 0, 50, 50, "#fff", 10)
     this.game = game
-    this.speed = 5
+
+    this.targetX = this.x;
+    this.targetY = this.y;
   }
 
   update(deltaTime) {
+    // Update target positions based on arrow keys
     if (this.game.keys.has("ArrowLeft")) {
-      this.x -= this.speed
+      this.targetX -= this.speed;
     } else if (this.game.keys.has("ArrowRight")) {
-      this.x += this.speed
+      this.targetX += this.speed;
     }
 
-    console.log(this.x)
+    if (this.game.keys.has("ArrowUp")) {
+      this.targetY -= this.speed;
+    } else if (this.game.keys.has("ArrowDown")) {
+      this.targetY += this.speed;
+    }
+
+    // Apply tweening
+    this.x += (this.targetX - this.x) * 0.1;
+    this.y += (this.targetY - this.y) * 0.1;
   }
 }

@@ -7,9 +7,9 @@ export default class Game {
     this.width = width
     this.height = height
 
-    this.input = new InputHandler(this)
-
     this.keys = new Set()
+    new InputHandler(this)
+
     this.debug = false
 
     this.player = new Player(this)
