@@ -1,12 +1,20 @@
 export default class GameObject {
-  constructor(x, y, width, height, color, speed) {
+  constructor(game, x, y, width, height, color, maxSpeed) {
+    this.game = game
     this.x = x
     this.y = y
     this.width = width
     this.height = height
     this.color = color
-    this.speed = speed
+
+    this.maxSpeed = maxSpeed
     this.direction = 1
+  }
+
+  update(deltaTime) {
+    this.x = this.x + this.maxSpeed / 1000 * deltaTime * this.direction
+    if (this.x > this.game.width - this.width) this.direction = -1
+    if (this.x < 0) this.direction = 1
   }
 
   draw(ctx) {
