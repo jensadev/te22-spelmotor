@@ -29,7 +29,7 @@ export default class Player extends GameObject {
   constructor(game) {
     ...
     this.image = new Image()
-    this.image.src = "./src/assets/AnimationSheet_Character.png"
+    this.image.src = "./src/assets/franks_doge.png"
   }
   ...
   draw(ctx) {
@@ -82,13 +82,13 @@ För att animera spelaren så behöver vi ändra `frameX` för varje frame. Fram
 export default class Player extends GameObject {
   constructor(game) {
     ...
-    this.frameWidth = 32
-    this.frameHeight = 32
+    this.frameWidth = 100
+    this.frameHeight = 92
     this.frameX = 0
     this.frameY = 0
 
-    this.maxFrame = 2
-    this.fps = 5
+    this.maxFrames = 7
+    this.fps = 20
     this.timer = 0
     this.interval = 1000 / this.fps
   }
@@ -102,7 +102,7 @@ export default class Player extends GameObject {
       this.timer += deltaTime
     }
 
-    if (this.frameX >= this.maxFrame) {
+    if (this.frameX >= this.maxFrames) {
       this.frameX = 0
     }
   }
@@ -131,18 +131,107 @@ Testa först att ändra `frameY` för att rita en annan animation, du kan även 
 
 ### Ändra animation
 
-Vi kan nu testa att ändra `frameY` för att rita en annan animation. Vi kommer att byta mellan två animationer beroende på om spelaren rör sig eller inte. För att göra detta så kan vi använda targetX och targetY för att kolla om spelaren rör sig.
+Vi kan nu testa att ändra `frameY` för att rita en annan animation. Vi kommer att byta mellan två animationer beroende på om spelaren rör sig eller inte.
 
 `src/Player.js`
 ```javascript
 update(deltaTime) {
     ...
-    if (Math.abs(this.targetX - this.x) > 0.5 || Math.abs(this.targetY - this.y) > 0.5) {
-      this.frameY = 3;
+    if (this.speedX !== 0 || this.speedY !== 0) {
+      this.frameY = 3
     } else {
-      this.frameY = 0;
+      this.frameY = 0
     }
 }
 ```
 
-Vi har nu lagt till en if-sats som kollar om `targetX` och `targetY` är större än 0.5. Om de är det så sätter vi `frameY` till 3, annars sätter vi `frameY` till 0.
+Vi kollar om spelaren rör sig genom att kolla om `speedX` eller `speedY` är olika från 0. Om du nu laddar spelet och rör på spelaren så ska du se att spelaren byter animation, men du kommer märka att det inte är helt rätt. Det beror på att vi inte har rätt antal frames för varje animation.
+
+### Ändra antal frames
+
+För att ändra antal frames för varje animation så behöver vi ändra `maxFrames` för varje animation. Vi kan använda `frameY` för att bestämma vilken animation vi ska rita.
+
+`src/Player.js`
+```javascript
+constructor(game) {
+    ...
+    this.maxFrames = 7
+}
+
+update(deltaTime) {
+    ...
+    if (this.speedX !== 0 || this.speedY !== 0) {
+      this.frameY = 3
+      this.maxFrames = 9
+    } else {
+      this.frameY = 0
+      this.maxFrames = 7
+    }
+}
+```
+
+Vi ändrar `maxFrames` beroende på vilken animation vi ska rita. Om spelaren rör sig så ändrar vi `frameY` till 3 och `maxFrames` till 9. Om spelaren inte rör sig så ändrar vi `frameY` till 0 och `maxFrames` till 7.
+
+Om du nu laddar spelet och rör på spelaren så ska du se att spelaren byter animation beroende på om spelaren rör sig eller inte.
+
+## Sammanfattning
+
+Vi har nu skapat en ny klass `Player` för att rita spelaren med en bild. Vi har använt `drawImage` för att rita en del av bilden för att visa en frame. Vi har använt `requestAnimationFrame` för att anropa `update` och `draw` i spelet. Vi har använt `deltaTime` för att räkna ut vilken frame vi ska rita. Vi har använt fler parametrar i `drawImage` för att rita en del av bilden. Vi har använt en timer för att rita en frame och vi har använt flera frames för att animera spelaren.
+
+## Nästa steg
+
+I nästa steg så kommer vi att ändra så att spelarens sprite byter riktning beroende på vilket håll spelaren rör sig.
+
+## Riktning
+
+Vi kan använda `scale` för att spegelvända spelaren beroende på vilket håll spelaren rör sig. För att göra det så behöver vi dock först spara en kopia av canvasen och sedan spegelvända den. Vi kan använda `save` och `restore` för att spara och återställa canvasen.
+
+Vi kommer att spara en variabel för att hålla koll på vilket håll spelaren rör sig, `this.flip`.
+
+`src/Player.js`
+```javascript
+  constructor(game) {
+    ...
+    this.flip = false
+  }
+
+  update(deltaTime) {
+    if (this.game.keys.has("ArrowLeft")) {
+      this.speedX = -this.maxSpeed
+      this.flip = true
+    } else if (this.game.keys.has("ArrowRight")) {
+      this.flip = false
+      this.speedX = this.maxSpeed
+    } else {
+      this.speedX = 0
+    }
+    ...
+  }
+
+  draw(ctx) {
+    if (this.flip) {
+      ctx.save()
+      ctx.scale(-1, 1)
+    }
+    ctx.drawImage(
+      this.image,
+      this.frameX * this.frameWidth,
+      this.frameY * this.frameHeight,
+      this.frameWidth,
+      this.frameHeight,
+      this.flip ? this.x * -1 - this.width : this.x,
+      this.y,
+      this.width,
+      this.height,
+    )
+    if (this.flip) {
+      ctx.restore()
+    }
+  }
+}
+```
+
+Vi sparar `this.flip` beroende på vilket håll spelaren rör sig. Om spelaren rör sig åt vänster så sätter vi `this.flip` till `true` och om spelaren rör sig åt höger så sätter vi `this.flip` till `false`. Sedan använder vi `this.flip` för att spegelvända spelaren i `draw`.
+
+Och med de ändringarna så ska spelaren nu spegelvändas beroende på vilket håll spelaren rör sig.
+
