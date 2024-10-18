@@ -8,10 +8,7 @@ Jag kommer att skapa en ny branch för att hålla koden separerad. `player-sprit
 
 ## Förklaring
 
-Vi kommer att använda assets från itch.io för spelaren. Jag kommer använda två olika assets, den ena där alla animationer är samlade i en bild och den andra där varje animation är separerad.
-
-https://penzilla.itch.io/hooded-protagonist
-https://free-game-assets.itch.io/free-tiny-hero-sprites-pixel-art
+Vi kommer att använda en asset från ett tutorial skapat av [Franks Labratory](https://www.youtube.com/@Frankslaboratory). Du hittar videon med asseten [där](https://www.youtube.com/watch?v=c-1dBd1_G8A). 
 
 Sätter vi kommer att animera spelaren är att vi kommer att rita ut en del av bilden för varje frame. Vi kommer att använda `drawImage` för att rita bilden på canvasen. `drawImage` tar in en bild, en x-position, en y-position, en bredd och en höjd för att rita bilden.
 
