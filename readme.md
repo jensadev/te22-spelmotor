@@ -410,6 +410,57 @@ Om du nu öppnar sidan i webbläsaren så ska du se tre färger som rör sig öv
 
 Skapa och studsa spelobjekt på y-axeln.
 
+## Refaktorisera spelobjeket och Game
+
+Vi kan nu refaktorisera `GameObject` och `Game` för att göra koden mer läsbar och enklare att förstå. Vi har nuläget all logik för att uppdatera gameobjekt i `Game`. Vi kan flytta logiken till `GameObject` för att göra koden mer läsbar.
+
+### Uppdatera GameObject
+
+Öppna `GameObject.js` och lägg till följande kod.
+
+```javascript
+  constructor(game, x, y, width, height, color, maxSpeed) {
+    this.game = game
+    ...
+    this.currentSpeed = 0
+    this.maxSpeed = maxSpeed
+    this.direction = 1
+  }
+
+  update(deltaTime) {
+    this.x = this.x + this.maxSpeed / 1000 * deltaTime * this.direction
+    if (this.x > this.game.width - this.width) this.direction = -1
+    if (this.x < 0) this.direction = 1
+  }
+```
+
+Vi har nu flyttat logiken för att uppdatera spelobjekt till `GameObject`. Vi skickar med `game` för att kunna använda `width` i `update`. Vi har också lagt till `currentSpeed` för att kunna använda `speed` i `update`.
+
+### Uppdatera Game
+
+Öppna `Game.js` och lägg till följande kod.
+
+```javascript
+this.gameObjects = [
+  new GameObject(this, 0, 100, 20, 20, '#f00', 100),
+  new GameObject(this, 0, 200, 20, 20, '#0f0', 200),
+  new GameObject(this, 0, 300, 20, 20, '#00f', 300)
+]
+
+update(deltaTime) {
+  this.gameObjects.forEach(gameObject => {
+    gameObject.update(deltaTime)
+  })
+}
+```
+
+Vi har nu flyttat logiken för att uppdatera spelobjekt till `GameObject`. Vi skickar med `this` för att kunna använda `width` i `update`.
+
+Om du nu öppnar sidan i webbläsaren så ska du se tre färger som rör sig över canvasen och studsar när de når kanten.
+
+En signifikant förbättring från tidigare kod och mycket tydligare och renare att läsa. `update` metoden liknar nu också mer `draw` metoden.
+
+
 ## Sammanfattning
 
 Vi har nu skapat grunden för ett spel med canvas. Vi har skapat en klass `Game` som hanterar spelet och en klass för att hantera spelobjekt. Vi har använt `requestAnimationFrame` för att uppdatera och rita spelet. Vi har också använt en klass för att kunna skapa flera spelobjekt som rör sig över canvasen.
