@@ -6,10 +6,10 @@ I det här som är ditt startrepo (du kan jobba i det eller göra ett nytt, där
 Strukturen på repot är ett antal branches och readme filer där koden förklaras.
 
 ## Branches
-- [main](https://github.com/jensadev/te22-spelmotor/)
-- [player input](https://github.com/jensadev/te22-spelmotor/tree/player-input)
-- [player sprite](https://github.com/jensadev/te22-spelmotor/tree/player-sprite)
-- [background image](https://github.com/jensadev/te22-spelmotor/tree/background-image)
+- [main](https://github.com/jensadev/te22-spelmotor/) Grunderna och strukturen
+- [player input](https://github.com/jensadev/te22-spelmotor/tree/player-input) Styr spelaren, lyssna på tangentbordet
+- [player sprite](https://github.com/jensadev/te22-spelmotor/tree/player-sprite) Använda en sprite för spelaren och animera den
+- [background image](https://github.com/jensadev/te22-spelmotor/tree/background-image) Lägga till en bakgrundsbild skapad av flera lager
 
 ## Mål
 
