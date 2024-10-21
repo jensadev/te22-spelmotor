@@ -2,7 +2,7 @@ import GameObject from "./GameObject"
 
 export default class Player extends GameObject {
   constructor(game) {
-    super(game, 0, 0, 128, 128, "#fff", 5)
+    super(game, 0, 300, 128, 128, "#fff", 5)
 
     this.image = new Image()
     this.image.src = "./src/assets/franks_doge.png"

@@ -1,11 +1,15 @@
 import GameObject from "./GameObject.js"
 import InputHandler from "./InputHandler.js"
 import Player from "./Player.js"
+import Background from "./Background.js"
 
 export default class Game {
   constructor(width, height) {
     this.width = width
     this.height = height
+
+    this.background = new Background(this)
+    this.speed = 1
 
     this.keys = new Set()
     new InputHandler(this)
@@ -23,6 +27,7 @@ export default class Game {
   }
 
   update(deltaTime) {
+    this.background.update(deltaTime)
     this.gameObjects.forEach(gameObject => {
       gameObject.update(deltaTime)
     })
@@ -31,10 +36,12 @@ export default class Game {
   }
 
   draw(ctx) {
+    this.background.draw(ctx)
     this.gameObjects.forEach(gameObject => {
       gameObject.draw(ctx)
     })
 
     this.player.draw(ctx)
+    this.background.backgroundLayers[3].draw(ctx)
   }
 }
