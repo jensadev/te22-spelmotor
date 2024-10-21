@@ -1,5 +1,20 @@
 # Spelmotor
 
+För det här projektet kommer vi att utgå från denna spelmotor. Koden grundar sig på material från [Franks laboratory](https://www.youtube.com/@Frankslaboratory). Han har skapat mycket material där JS används för att skapa spel. I hans grund får vi en bra start och ide om hur vi kan jobba med klasser och objekt i JS.
+
+I det här som är ditt startrepo (du kan jobba i det eller göra ett nytt, där du följer installationsinstruktionerna nedan) så ska vi gå igenom hur det fungerar.
+Strukturen på repot är ett antal branches och readme filer där koden förklaras.
+
+## Branches
+- [main](https://github.com/jensadev/te22-spelmotor/)
+- [player input](https://github.com/jensadev/te22-spelmotor/tree/player-input)
+- [player sprite](https://github.com/jensadev/te22-spelmotor/tree/player-sprite)
+- [background image](https://github.com/jensadev/te22-spelmotor/tree/background-image)
+
+## Mål
+
+Målet med projektet är att skapa ett spel och förstå Javascript tillräckligt för att kunna göra det. Vi kommer att använda oss av klasser och objekt för att skapa spelet. Vi kommer att använda canvas för att rita spelet.
+
 ## Setup
 
 Vi kommer att använda vite för att starta och köra projektet. Vite är ett byggverktyg som är snabbt och enkelt att använda. För att skapa ett nytt projekt med vite kör följande kommandon:
