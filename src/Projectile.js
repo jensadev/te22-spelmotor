@@ -6,19 +6,13 @@ export default class Projectile extends GameObject {
     this.game = game
     this.speedY = -4
     this.color = "yellow"
+    this.markedForDeletion = false
   }
 
   update(deltaTime) {
     this.y += this.speedY
     if (this.y < 0) {
-      this.game.projectiles = this.game.projectiles.filter(
-        (projectile) => projectile !== this
-      )
+      this.markedForDeletion = true
     }
-  }
-
-  draw(ctx) {
-    ctx.fillStyle = this.color
-    ctx.fillRect(this.x, this.y, this.width, this.height)
   }
 }

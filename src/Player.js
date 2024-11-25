@@ -47,9 +47,8 @@ export default class Player extends GameObject {
   }
 
   attack() {
-    if (this.attackDelay > 0) {
-      return
-    }
+    if (this.attackDelay > 0) return
+  
     this.attackDelay = this.attackInterval
 
     this.game.projectiles.push(
