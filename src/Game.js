@@ -5,6 +5,7 @@ import Enemy from "./Enemy.js"
 import UserInterface from "./UserInterface.js"
 import Powerup from "./Powerup.js"
 import Audio from "./Audio.js"
+import Background from "./Background.js"
 
 export default class Game {
   constructor(width, height) {
@@ -24,12 +25,16 @@ export default class Game {
     this.audio = new Audio()
     this.audio.loadSound("race", "./src/assets/sounds/Race to Mars.mp3")
 
+    this.background = new Background(this)
+
     this.ui = new UserInterface(this)
     this.score = 0
     this.elapsedTime = 0
 
     this.gameOver = false
     this.debug = false
+
+    this.speed = 5
   }
 
   update(deltaTime) {
@@ -39,6 +44,8 @@ export default class Game {
 
     this.elapsedTime += deltaTime / 1000
     this.ui.update(deltaTime)
+
+    this.background.update(deltaTime)
 
     this.powerups.forEach((powerup) => {
       powerup.update(deltaTime)
@@ -90,6 +97,7 @@ export default class Game {
   }
 
   draw(ctx) {
+    this.background.draw(ctx)
     this.player.draw(ctx)
     this.projectiles.forEach((projectile) => {
       projectile.draw(ctx)

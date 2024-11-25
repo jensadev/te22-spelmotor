@@ -2,6 +2,7 @@ export default class Input {
   constructor(game) {
     this.game = game
     this.keys = new Set()
+    this.playing = false
 
     window.addEventListener("keydown", (event) => {
       console.log(event.key)
@@ -9,6 +10,11 @@ export default class Input {
       if (event.key === "p") {
         this.game.debug = !this.game.debug
         console.log("Debug mode:", this.game.debug)
+      }
+
+      if (event && this.playing === false) {
+        this.game.audio.playSound("race")
+        this.playing = true
       }
     })
 
