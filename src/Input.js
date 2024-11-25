@@ -6,6 +6,10 @@ export default class Input {
     window.addEventListener("keydown", (event) => {
       console.log(event.key)
       this.keys.add(event.key)
+      if (event.key === "p") {
+        this.game.debug = !this.game.debug
+        console.log("Debug mode:", this.game.debug)
+      }
     })
 
     window.addEventListener("keyup", (event) => {

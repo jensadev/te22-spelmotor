@@ -34,6 +34,7 @@ export default class UserInterface {
   }
 
   triggerFlash(duration) {
+    if (this.game.debug) return
     this.flashTime = duration || 0.1
   }
 }
