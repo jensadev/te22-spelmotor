@@ -9,7 +9,7 @@ export default class Game {
     this.height = height
 
     this.background = new Background(this)
-    this.speed = 1
+    this.speed = 6
 
     this.keys = new Set()
     new InputHandler(this)
@@ -18,6 +18,8 @@ export default class Game {
 
     this.player = new Player(this)
 
+    this.groundHeight = 80
+    this.gravity = 0.5
 
     this.gameObjects = [
       new GameObject(this, 0, 100, 20, 20, '#f00', 100),

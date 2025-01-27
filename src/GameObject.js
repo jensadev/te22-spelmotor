@@ -1,13 +1,13 @@
 export default class GameObject {
-  constructor(game, x, y, width, height, color, maxSpeed) {
+  constructor(game, x, y, width, height) {
     this.game = game
     this.x = x
     this.y = y
     this.width = width
     this.height = height
-    this.color = color
+    this.color = "#fff"
 
-    this.maxSpeed = maxSpeed
+    this.maxSpeed = 1
     this.direction = 1
   }
 

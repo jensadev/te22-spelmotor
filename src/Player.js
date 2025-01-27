@@ -2,7 +2,7 @@ import GameObject from "./GameObject"
 
 export default class Player extends GameObject {
   constructor(game) {
-    super(game, 0, 300, 128, 128, "#fff", 5)
+    super(game, 60, 80, 128, 128)
 
     this.image = new Image()
     this.image.src = "./src/assets/franks_doge.png"
@@ -13,42 +13,35 @@ export default class Player extends GameObject {
     this.frameWidth = 100
     this.frameHeight = 92
     this.frameX = 0
-    this.frameY = 0
+    this.frameY = 3
     this.flip = false
     this.maxFrames = 7
     this.fps = 20
     this.timer = 0
     this.interval = 1000 / this.fps
+
+    this.jumpSpeed = 10
+    this.grounded = true
   }
 
   update(deltaTime) {
-    if (this.game.keys.has("ArrowLeft")) {
-      this.speedX = -this.maxSpeed
-      this.flip = true
-    } else if (this.game.keys.has("ArrowRight")) {
-      this.flip = false
-      this.speedX = this.maxSpeed
-    } else {
-      this.speedX = 0
+
+    if (this.game.keys.has("ArrowUp") && this.grounded) {
+      this.speedY -= this.jumpSpeed
+      this.grounded = false
     }
 
-    if (this.game.keys.has("ArrowUp")) {
-      this.speedY = -this.maxSpeed
-    } else if (this.game.keys.has("ArrowDown")) {
-      this.speedY = this.maxSpeed
-    } else {
+    if (this.y > this.game.height - this.game.groundHeight - this.height) {
+      this.y = this.game.height - this.game.groundHeight - this.height
+      this.grounded = true
+    }
+
+    if (this.grounded) {
       this.speedY = 0
-    }
-
-    if (this.speedX !== 0 || this.speedY !== 0) {
-      this.frameY = 3
-      this.maxFrames = 9
     } else {
-      this.frameY = 0
-      this.maxFrames = 7
+      this.speedY += this.game.gravity
     }
 
-    this.x += this.speedX
     this.y += this.speedY
 
     if (this.timer > this.interval) {
