@@ -20,7 +20,7 @@ export default class Player extends GameObject {
     this.timer = 0
     this.interval = 1000 / this.fps
 
-    this.jumpSpeed = 10
+    this.jumpSpeed = 12
     this.grounded = true
   }
 
