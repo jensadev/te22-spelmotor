@@ -1,31 +1,50 @@
 import GameObject from "./GameObject"
 
 export default class Player extends GameObject {
-  constructor(game) {
-    super(game, 0, 0, 50, 50, "#fff", 10)
+  constructor(game, x, y) {
+    super(game, x, y, 50, 50, "#fff", 10)
 
-    this.speedX = 0
-    this.speedY = 0
+    this.speedX = 5
+    this.speedY = 15
+
+    this.velocityY = 0
+    this.grounded = false
   }
 
   update(deltaTime) {
     if (this.game.keys.has("ArrowLeft")) {
-      this.speedX = -this.maxSpeed
+      if (this.x > 0) {
+        this.x -= this.speedX
+      }
     } else if (this.game.keys.has("ArrowRight")) {
-      this.speedX = this.maxSpeed
-    } else {
-      this.speedX = 0
+      if (this.x + this.width < this.game.worldWidth) {
+        this.x += this.speedX
+      }
     }
 
-    if (this.game.keys.has("ArrowUp")) {
-      this.speedY = -this.maxSpeed
-    } else if (this.game.keys.has("ArrowDown")) {
-      this.speedY = this.maxSpeed
-    } else {
-      this.speedY = 0
+    if (
+      (this.game.keys.has("ArrowUp") || this.game.keys.has(" ")) &&
+      this.grounded
+    ) {
+      this.velocityY = -this.speedY
+      this.grounded = false
     }
 
-    this.x += this.speedX
-    this.y += this.speedY
+    // Apply gravity
+    this.velocityY += this.game.gravity
+    this.y += this.velocityY
+
+    if (this.y + this.height >= this.game.groundLevel) {
+      this.y = this.game.groundLevel - this.height
+      this.velocityY = 0
+      this.grounded = true
+    } else {
+      this.grounded = false
+    }
+  }
+
+  draw(ctx) {
+    ctx.fillStyle = this.color
+    ctx.fillRect(this.x, this.y, this.width, this.height)
   }
 }

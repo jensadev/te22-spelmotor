@@ -9,6 +9,10 @@ export default class InputHandler {
         this.game.debug = !this.game.debug
       }
 
+      if (event.key === 'p') {
+        this.game.camera.shake(10, 10)
+      }
+
     })
     window.addEventListener('keyup', (event) => {
       this.game.keys.delete(event.key)
