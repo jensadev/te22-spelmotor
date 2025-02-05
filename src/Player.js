@@ -17,7 +17,7 @@ export default class Player extends GameObject {
         this.x -= this.speedX
       }
     } else if (this.game.keys.has("ArrowRight")) {
-      if (this.x + this.width < this.game.worldWidth) {
+      if (this.x + this.width < this.game.level.worldWidth) {
         this.x += this.speedX
       }
     }
@@ -31,11 +31,11 @@ export default class Player extends GameObject {
     }
 
     // Apply gravity
-    this.velocityY += this.game.gravity
+    this.velocityY += this.game.level.gravity
     this.y += this.velocityY
 
-    if (this.y + this.height >= this.game.groundLevel) {
-      this.y = this.game.groundLevel - this.height
+    if (this.y + this.height >= this.game.level.groundLevel) {
+      this.y = this.game.level.groundLevel - this.height
       this.velocityY = 0
       this.grounded = true
     } else {

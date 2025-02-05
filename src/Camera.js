@@ -24,8 +24,8 @@ export default class Camera {
     // Clamp the camera position to the game world boundaries
     if (this.x < 0) this.x = 0
     if (this.y < 0) this.y = 0
-    if (this.x + this.width > this.game.worldWidth) this.x = this.game.worldWidth - this.width
-    if (this.y + this.height > this.game.worldHeight) this.y = this.game.worldHeight - this.height
+    if (this.x + this.width > this.game.level.worldWidth) this.x = this.game.level.worldWidth - this.width
+    if (this.y + this.height > this.game.level.worldHeight) this.y = this.game.level.worldHeight - this.height
 
     /*
     Math.max(0, this.x): Ensures the camera's x position doesn't go below 0, which is the left boundary of the game world.
@@ -60,27 +60,20 @@ export default class Camera {
     if (!this.game.debug) {
       return
     }
-    // Draw camera viewport
-    // ctx.strokeStyle = "green"
-    // ctx.strokeRect(
-    //   this.camera.x,
-    //   this.camera.y,
-    //   this.camera.width,
-    //   this.camera.height,
-    // )
 
     // Draw grid overlay
     ctx.strokeStyle = "lightgray"
-    for (let x = 0; x < this.game.worldWidth; x += 50) {
+    ctx.lineWidth = 1
+    for (let x = 0; x < this.game.level.worldWidth; x += 50) {
       ctx.beginPath()
       ctx.moveTo(x, 0)
-      ctx.lineTo(x, this.game.worldHeight)
+      ctx.lineTo(x, this.game.level.worldHeight)
       ctx.stroke()
     }
-    for (let y = 0; y < this.game.worldHeight; y += 50) {
+    for (let y = 0; y < this.game.level.worldHeight; y += 50) {
       ctx.beginPath()
       ctx.moveTo(0, y)
-      ctx.lineTo(this.game.worldWidth, y)
+      ctx.lineTo(this.game.level.worldWidth, y)
       ctx.stroke()
     }
   }

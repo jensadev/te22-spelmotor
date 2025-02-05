@@ -15,6 +15,7 @@ export default class GameObject {
     if (this.game.debug) {
         // Draw bounding box around the object
         ctx.strokeStyle = "red"
+        ctx.lineWidth = 2
         ctx.strokeRect(this.x, this.y, this.width, this.height)
     }
   }
