@@ -63,11 +63,11 @@ export default class Player extends GameObject {
 
     // Decrement the attack timer
     if (this.attackTimer > 0) {
-      this.attackTimer -= deltaTime;
+      this.attackTimer -= deltaTime
     }
 
     if (this.game.input.keys.has("mouse0") && this.attackTimer <= 0) {
-      this.attack();
+      this.attack()
     }
   }
 
@@ -87,7 +87,7 @@ export default class Player extends GameObject {
   attack() {
     const angle = Math.atan2(
       this.game.input.mouseY - (this.y + this.height / 2),
-      this.game.input.mouseX - (this.x + this.width / 2)
+      this.game.input.mouseX - (this.x + this.width / 2),
     )
 
     this.game.projectiles.push(
@@ -96,9 +96,14 @@ export default class Player extends GameObject {
         this.x + this.width / 2,
         this.y + this.height / 2,
         angle,
-        500
-      )
+        500,
+      ),
     )
+
+    // Trigger camera effects
+    this.game.camera.shake(50, 2) // Shake duration in ms, intensity
+    this.game.camera.flash("red", 50, 0.1) // Flash color and duration in ms
+
     this.attackTimer = this.attackCooldown
   }
 }

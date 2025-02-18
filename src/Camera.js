@@ -5,6 +5,9 @@ export default class Camera {
     this.y = 0;
     this.shakeDuration = 0;
     this.shakeIntensity = 0;
+    this.flashDuration = 0;
+    this.flashColor = '';
+    this.flashIntensity = 0;
   }
 
   update(deltaTime) {
@@ -15,6 +18,10 @@ export default class Camera {
     } else {
       this.x = 0;
       this.y = 0;
+    }
+
+    if (this.flashDuration > 0) {
+      this.flashDuration -= deltaTime;
     }
   }
 
@@ -27,12 +34,18 @@ export default class Camera {
     this.shakeIntensity = intensity;
   }
 
-  flash(ctx, color, duration) {
-    ctx.fillStyle = color;
-    ctx.globalAlpha = 0.5;
-    ctx.fillRect(0, 0, this.game.width, this.game.height);
-    setTimeout(() => {
-      ctx.globalAlpha = 1;
-    }, duration);
+  flash(color, duration, intensity = 0.5) {
+    this.flashColor = color;
+    this.flashDuration = duration;
+    this.flashIntensity = intensity;
+  }
+
+  draw(ctx) {
+    if (this.flashDuration > 0) {
+      ctx.fillStyle = this.flashColor;
+      ctx.globalAlpha = this.flashIntensity;
+      ctx.fillRect(0, 0, this.game.width, this.game.height);
+      ctx.globalAlpha = 1; // Reset alpha to default
+    }
   }
 }
