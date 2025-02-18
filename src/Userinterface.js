@@ -10,7 +10,7 @@ export default class Userinterface {
     ctx.font = "16px Arial";
     ctx.fillText(`Room: ${this.game.level.getCurrentRoom().id}`, 10, 20);
     ctx.fillText(`Player: ${this.game.player.x}, ${this.game.player.y}`, 10, 40);
-    ctx.fillText(`Keys: ${Array.from(this.game.keys).join(", ")}`, 10, 60);
+    ctx.fillText(`Keys: ${Array.from(this.game.input.keys).join(", ")}`, 10, 60);
     ctx.fillText(`Debug: ${this.game.debug}`, 10, 80);
 
     this.drawMiniMap(ctx);

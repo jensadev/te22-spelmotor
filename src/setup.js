@@ -6,7 +6,7 @@ export function setup(canvas) {
   canvas.width = 854 // sätt bredden på canvas
   canvas.height = 480 // sätt höjden på canvas
 
-  const game = new Game(canvas.width, canvas.height)
+  const game = new Game(canvas)
   let lastTime = 0
 
   const animate = (timeStamp) => {

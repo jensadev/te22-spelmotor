@@ -12,7 +12,7 @@ export default class Room {
       north: false,
       south: false,
       east: false,
-      west: false
+      west: false,
     }
   }
 
@@ -26,6 +26,31 @@ export default class Room {
       this.border,
       this.border,
       this.width - this.border * 2,
-      this.height - this.border * 2)
+      this.height - this.border * 2,
+    )
+  }
+
+  checkRoomTransition(player) {
+    console.log("Checking room transition", player.x, player.y)
+    if (player.x <= 0 && this.exits.west) {
+      console.log("Changing room to the west")
+      this.game.level.changeRoom(this.exits.west.id)
+      player.x = this.game.width - player.width
+    } else if (player.x + player.width >= this.game.width && this.exits.east) {
+      console.log("Changing room to the east")
+      this.game.level.changeRoom(this.exits.east.id)
+      player.x = 0
+    } else if (player.y <= 0 && this.exits.north) {
+      console.log("Changing room to the north")
+      this.game.level.changeRoom(this.exits.north.id)
+      player.y = this.game.height - player.height
+    } else if (
+      player.y + player.height >= this.game.height &&
+      this.exits.south
+    ) {
+      console.log("Changing room to the south")
+      this.game.level.changeRoom(this.exits.south.id)
+      player.y = 0
+    }
   }
 }

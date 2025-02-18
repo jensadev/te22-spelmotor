@@ -10,17 +10,26 @@ export default class Player extends GameObject {
   }
 
   update(deltaTime) {
-    if (this.game.keys.has("ArrowLeft")) {
+    if (
+      this.game.input.keys.has("ArrowLeft") ||
+      this.game.input.keys.has("a")
+    ) {
       this.speedX = -this.speed
-    } else if (this.game.keys.has("ArrowRight")) {
+    } else if (
+      this.game.input.keys.has("ArrowRight") ||
+      this.game.input.keys.has("d")
+    ) {
       this.speedX = this.speed
     } else {
       this.speedX = 0
     }
 
-    if (this.game.keys.has("ArrowUp")) {
+    if (this.game.input.keys.has("ArrowUp") || this.game.input.keys.has("w")) {
       this.speedY = -this.speed
-    } else if (this.game.keys.has("ArrowDown")) {
+    } else if (
+      this.game.input.keys.has("ArrowDown") ||
+      this.game.input.keys.has("s")
+    ) {
       this.speedY = this.speed
     } else {
       this.speedY = 0
@@ -28,5 +37,43 @@ export default class Player extends GameObject {
 
     this.x += this.speedX
     this.y += this.speedY
+
+    // Prevent the player from moving outside the game boundaries
+    // and check for room transitions
+    if (this.x < 0) {
+      this.x = 0
+      this.game.level.getCurrentRoom().checkRoomTransition(this)
+    }
+    if (this.x + this.width > this.game.width) {
+      this.x = this.game.width - this.width
+      this.game.level.getCurrentRoom().checkRoomTransition(this)
+    }
+    if (this.y < 0) {
+      this.y = 0
+      this.game.level.getCurrentRoom().checkRoomTransition(this)
+    }
+    if (this.y + this.height > this.game.height) {
+      this.y = this.game.height - this.height
+      this.game.level.getCurrentRoom().checkRoomTransition(this)
+    }
+
+    if (this.game.input.mouseX < this.x) {
+      this.speedX = -this.speed
+    } else if (this.game.input.mouseX > this.x) {
+      this.speedX = this.speed
+    }
+  }
+
+  draw(ctx) {
+    ctx.fillStyle = this.color
+    ctx.fillRect(this.x, this.y, this.width, this.height)
+
+    if (this.game.debug) {
+      ctx.beginPath()
+      ctx.moveTo(this.x + this.width / 2, this.y + this.height / 2)
+      ctx.lineTo(this.game.input.mouseX, this.game.input.mouseY)
+      ctx.strokeStyle = "white"
+      ctx.stroke()
+    }
   }
 }
