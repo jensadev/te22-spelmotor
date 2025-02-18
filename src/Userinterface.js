@@ -8,7 +8,8 @@ export default class Userinterface {
   draw(ctx) {
     ctx.fillStyle = "white";
     ctx.font = "16px Arial";
-    ctx.fillText(`Room: ${this.game.level.getCurrentRoom().id}`, 10, 20);
+    console.log(this.game.levelManager.currentLevel.getCurrentRoom())
+    ctx.fillText(`Room: ${this.game.levelManager.currentLevel.getCurrentRoom()}`, 10, 20);
     ctx.fillText(`Player: ${this.game.player.x}, ${this.game.player.y}`, 10, 40);
     ctx.fillText(`Keys: ${Array.from(this.game.input.keys).join(", ")}`, 10, 60);
     ctx.fillText(`Debug: ${this.game.debug}`, 10, 80);
@@ -31,11 +32,11 @@ export default class Userinterface {
 
     const roomPositions = this.calculateRoomPositions();
 
-    const currentRoom = this.game.level.getCurrentRoom();
+    const currentRoom = this.game.levelManager.currentLevel.getCurrentRoom();
     const centerX = offsetX + miniMapSize / 2 - roomSize / 2;
     const centerY = offsetY + miniMapSize / 2 - roomSize / 2;
 
-    this.game.level.rooms.forEach((room) => {
+    this.game.levelManager.currentLevel.rooms.forEach((room) => {
       const { x, y } = roomPositions[room.id];
 
       const roomX = centerX + x * roomSize;
@@ -87,7 +88,7 @@ export default class Userinterface {
   calculateRoomPositions() {
     const positions = {};
     const visited = new Set();
-    const queue = [{ room: this.game.level.getCurrentRoom(), x: 0, y: 0 }];
+    const queue = [{ room: this.game.levelManager.currentLevel.getCurrentRoom(), x: 0, y: 0 }];
 
     while (queue.length > 0) {
       const { room, x, y } = queue.shift();
