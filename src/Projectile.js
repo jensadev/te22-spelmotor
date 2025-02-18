@@ -2,7 +2,7 @@ import GameObject from "./GameObject"
 
 export default class Projectile extends GameObject {
   constructor(game, x, y, angle, distance) {
-    super(game, x, y, 5, 5, "red")
+    super(game, x, y, 5, 5, "yellow")
     this.speed = 10
     this.angle = angle
     this.distance = distance

@@ -51,7 +51,8 @@ export default class Level {
   changeRoom(roomId) {
     const newRoom = this.rooms.find(room => room.id === roomId);
     if (newRoom) {
-      this.currentRoom = newRoom;
+      this.currentRoom = newRoom
+      this.game.clearProjectiles()
     }
   }
 

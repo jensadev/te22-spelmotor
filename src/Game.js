@@ -2,6 +2,7 @@ import InputHandler from "./InputHandler.js"
 import Player from "./Player.js"
 import Level from "./Level.js"
 import Userinterface from "./Userinterface.js"
+import Camera from "./Camera.js"
 
 export default class Game {
   constructor(canvas) {
@@ -20,6 +21,8 @@ export default class Game {
     this.level = new Level(this)
     this.level.generateLevel()
 
+    this.camera = new Camera(this)
+
     this.currentRoom = this.level.getCurrentRoom()
 
     this.projectiles = []
@@ -29,15 +32,21 @@ export default class Game {
     this.player.update(deltaTime)
     this.projectiles.forEach((projectile) => projectile.update(deltaTime))
     this.projectiles = this.projectiles.filter(
-      (projectile) => !projectile.markedForDeletion
+      (projectile) => !projectile.markedForDeletion,
     )
+    this.camera.update(deltaTime)
   }
 
   draw(ctx) {
     ctx.clearRect(0, 0, this.width, this.height)
+    this.camera.applyTransformations(ctx)
     this.level.draw(ctx)
     this.player.draw(ctx)
     this.projectiles.forEach((projectile) => projectile.draw(ctx))
     this.ui.draw(ctx)
+  }
+
+  clearProjectiles() {
+    this.projectiles = []
   }
 }
