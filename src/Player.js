@@ -1,4 +1,5 @@
 import GameObject from "./GameObject"
+import Projectile from "./Projectile"
 
 export default class Player extends GameObject {
   constructor(game) {
@@ -7,6 +8,9 @@ export default class Player extends GameObject {
     this.speedX = 0
     this.speedY = 0
     this.speed = 5
+
+    this.attackTimer = 0
+    this.attackCooldown = 200
   }
 
   update(deltaTime) {
@@ -57,10 +61,13 @@ export default class Player extends GameObject {
       this.game.level.getCurrentRoom().checkRoomTransition(this)
     }
 
-    if (this.game.input.mouseX < this.x) {
-      this.speedX = -this.speed
-    } else if (this.game.input.mouseX > this.x) {
-      this.speedX = this.speed
+    // Decrement the attack timer
+    if (this.attackTimer > 0) {
+      this.attackTimer -= deltaTime;
+    }
+
+    if (this.game.input.keys.has("mouse0") && this.attackTimer <= 0) {
+      this.attack();
     }
   }
 
@@ -75,5 +82,23 @@ export default class Player extends GameObject {
       ctx.strokeStyle = "white"
       ctx.stroke()
     }
+  }
+
+  attack() {
+    const angle = Math.atan2(
+      this.game.input.mouseY - (this.y + this.height / 2),
+      this.game.input.mouseX - (this.x + this.width / 2)
+    )
+
+    this.game.projectiles.push(
+      new Projectile(
+        this.game,
+        this.x + this.width / 2,
+        this.y + this.height / 2,
+        angle,
+        500
+      )
+    )
+    this.attackTimer = this.attackCooldown
   }
 }

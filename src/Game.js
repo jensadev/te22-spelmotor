@@ -1,4 +1,3 @@
-import GameObject from "./GameObject.js"
 import InputHandler from "./InputHandler.js"
 import Player from "./Player.js"
 import Level from "./Level.js"
@@ -22,16 +21,23 @@ export default class Game {
     this.level.generateLevel()
 
     this.currentRoom = this.level.getCurrentRoom()
+
+    this.projectiles = []
   }
 
   update(deltaTime) {
     this.player.update(deltaTime)
+    this.projectiles.forEach((projectile) => projectile.update(deltaTime))
+    this.projectiles = this.projectiles.filter(
+      (projectile) => !projectile.markedForDeletion
+    )
   }
 
   draw(ctx) {
     ctx.clearRect(0, 0, this.width, this.height)
     this.level.draw(ctx)
     this.player.draw(ctx)
+    this.projectiles.forEach((projectile) => projectile.draw(ctx))
     this.ui.draw(ctx)
   }
 }

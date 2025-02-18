@@ -13,6 +13,10 @@ export default class Userinterface {
     ctx.fillText(`Keys: ${Array.from(this.game.input.keys).join(", ")}`, 10, 60);
     ctx.fillText(`Debug: ${this.game.debug}`, 10, 80);
 
+    if (this.game.debug) {
+      ctx.fillText(`Projectiles: ${this.game.projectiles.length}`, 10, 100);
+    }
+
     this.drawMiniMap(ctx);
   }
 
