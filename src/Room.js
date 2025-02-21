@@ -16,23 +16,4 @@ export default class Room {
   addExit(direction, room) {
     this.exits[direction] = room
   }
-
-  checkRoomTransition(player) {
-    if (player.x <= 0 && this.exits.west) {
-      this.game.level.changeRoom(this.exits.west.id)
-      player.x = this.game.width - player.width
-    } else if (player.x + player.width >= this.game.width && this.exits.east) {
-      this.game.level.changeRoom(this.exits.east.id)
-      player.x = 0
-    } else if (player.y <= 0 && this.exits.north) {
-      this.game.level.changeRoom(this.exits.north.id)
-      player.y = this.game.height - player.height
-    } else if (
-      player.y + player.height >= this.game.height &&
-      this.exits.south
-    ) {
-      this.game.level.changeRoom(this.exits.south.id)
-      player.y = 0
-    }
-  }
 }

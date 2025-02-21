@@ -10,6 +10,8 @@ export default class LevelManager {
   }
 
   addLevel(level) {
+    level.width = this.game.width
+    level.height = this.game.height
     this.levels.push(level)
   }
 

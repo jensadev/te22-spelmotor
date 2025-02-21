@@ -5,6 +5,7 @@ export default class Player extends GameObject {
   constructor(game) {
     super(game, game.width / 2, game.height / 2, 32, 32, "white")
 
+    this.game = game
     this.speedX = 0
     this.speedY = 0
     this.speed = 5
@@ -46,19 +47,20 @@ export default class Player extends GameObject {
     // and check for room transitions
     if (this.x < 0) {
       this.x = 0
-      this.game.level.getCurrentRoom().checkRoomTransition(this)
+      this.game.levelManager.currentLevel.checkRoomTransition(this)
     }
     if (this.x + this.width > this.game.width) {
       this.x = this.game.width - this.width
-      this.game.level.getCurrentRoom().checkRoomTransition(this)
+      this.game.levelManager.currentLevel.checkRoomTransition(this)
     }
     if (this.y < 0) {
       this.y = 0
-      this.game.level.getCurrentRoom().checkRoomTransition(this)
+      console.log(this.game.levelManager.currentLevel)
+      this.game.levelManager.currentLevel.checkRoomTransition(this)
     }
     if (this.y + this.height > this.game.height) {
       this.y = this.game.height - this.height
-      this.game.level.getCurrentRoom().checkRoomTransition(this)
+      this.game.levelManager.currentLevel.checkRoomTransition(this)
     }
 
     // Decrement the attack timer

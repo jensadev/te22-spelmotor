@@ -8,8 +8,7 @@ export default class Userinterface {
   draw(ctx) {
     ctx.fillStyle = "white";
     ctx.font = "16px Arial";
-    console.log(this.game.levelManager.currentLevel.getCurrentRoom())
-    ctx.fillText(`Room: ${this.game.levelManager.currentLevel.getCurrentRoom()}`, 10, 20);
+    ctx.fillText(`Room: ${this.game.levelManager.currentLevel.currentRoom.id}`, 10, 20);
     ctx.fillText(`Player: ${this.game.player.x}, ${this.game.player.y}`, 10, 40);
     ctx.fillText(`Keys: ${Array.from(this.game.input.keys).join(", ")}`, 10, 60);
     ctx.fillText(`Debug: ${this.game.debug}`, 10, 80);
