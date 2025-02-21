@@ -3,14 +3,14 @@ import Room from "../Room.js"
 
 const level1 = new Level("Level 1 - The Dysfunctional Grotto")
 
-const room1 = new Room("r1", "#f00")
-const room2 = new Room("r2", "#0f0")
-const room3 = new Room("r3", "#00f")
-const room4 = new Room("r4", "#ff0")
-const room5 = new Room("r5", "#f0f")
-const room6 = new Room("r6", "#0ff")
-const room7 = new Room("r7", "#fff")
-const room8 = new Room("r8", "#000")
+const room1 = new Room("r1", "red")
+const room2 = new Room("r2", "green")
+const room3 = new Room("r3", "blue")
+const room4 = new Room("r4", "pink")
+const room5 = new Room("r5", "purple")
+const room6 = new Room("r6", "yellow")
+const room7 = new Room("r7", "teal")
+const room8 = new Room("r8", "orange")
 
 room1.addExit("east", room2)
 room1.addExit("south", room4)

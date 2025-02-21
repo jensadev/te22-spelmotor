@@ -36,6 +36,7 @@ export default class Userinterface {
     const centerY = offsetY + miniMapSize / 2 - roomSize / 2;
 
     this.game.levelManager.currentLevel.rooms.forEach((room) => {
+      console.log(room)
       const { x, y } = roomPositions[room.id];
 
       const roomX = centerX + x * roomSize;

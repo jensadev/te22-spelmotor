@@ -9,11 +9,13 @@ export default class Level {
     this.rooms.push(room)
   }
 
-  changeRoom(roomId) {
-    console.log(roomId)
+  changeRoom(roomId, player) {
+ 
     const newRoom = this.rooms.find(room => room.id === roomId);
     if (newRoom) {
       this.currentRoom = newRoom
+      player.x = this.width / 2 - player.width / 2
+      player.y = this.height / 2 - player.height / 2  
     }
   }
 
@@ -27,15 +29,13 @@ export default class Level {
 
   checkRoomTransition(player) {
     if (player.x <= 0 && this.currentRoom.exits.west) {
-      this.changeRoom(this.currentRoom.exits.west.id)
+      this.changeRoom(this.currentRoom.exits.west.id, player)
     } else if (player.x + player.width >= this.width && this.currentRoom.exits.east) {
-      this.changeRoom(this.currentRoom.exits.east.id)
+      this.changeRoom(this.currentRoom.exits.east.id, player)
     } else if (player.y <= 0 && this.currentRoom.exits.north) {
-      this.changeRoom(this.currentRoom.exits.north.id)
+      this.changeRoom(this.currentRoom.exits.north.id, player)
     } else if (this.currentRoom.exits.south) {
-      this.changeRoom(this.currentRoom.exits.south.id)
+      this.changeRoom(this.currentRoom.exits.south.id, player)
     }
-    player.x = this.width / 2 - player.width / 2
-    player.y = this.height / 2 - player.height / 2
   }
 }
