@@ -69,8 +69,7 @@ export default class Menu extends Scene {
                 this.game.sceneManager.changeScene("levelOne")
                 break
             case 1: // Instructions
-                // TODO: Add instructions scene
-                console.log("Instructions not implemented yet")
+                this.game.sceneManager.changeScene("instructions")
                 break
             case 2: // Quit
                 console.log("Quit game")

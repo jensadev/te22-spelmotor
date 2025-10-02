@@ -12,7 +12,11 @@ export default class Enemy extends GameObject {
   update(deltaTime) {
     this.y += this.speedY
     if (this.y > this.game.height) {
-      this.game.player.takeDamage(10)
+      // Get player from current scene
+      const currentScene = this.game.sceneManager.currentScene
+      if (currentScene && currentScene.player) {
+        currentScene.player.takeDamage(10)
+      }
       this.markedForDeletion = true
     }
   }

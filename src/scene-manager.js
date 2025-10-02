@@ -1,5 +1,6 @@
 import MenuScene from "./scenes/menu-scene.js"
 import LevelOneScene from "./scenes/level-one-scene.js"
+import InstructionsScene from "./scenes/instructions-scene.js"
 
 export default class SceneManager {
     constructor(game) {
@@ -10,6 +11,7 @@ export default class SceneManager {
         // Initialize scenes
         this.scenes.menu = new MenuScene(this.game)
         this.scenes.levelOne = new LevelOneScene(this.game)
+        this.scenes.instructions = new InstructionsScene(this.game)
         
         // Start with menu
         this.changeScene("menu")

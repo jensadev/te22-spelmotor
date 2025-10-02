@@ -6,15 +6,15 @@ export function setup(canvas) {
   canvas.width = 854 / 2 // sätt bredden på canvas
   canvas.height = 480 // sätt höjden på canvas
 
-  const gameInstance = new Game(canvas.width, canvas.height)
+  const game = new Game(canvas.width, canvas.height)
   let lastTime = 0
 
   const animate = (timeStamp) => {
     const deltaTime = timeStamp - lastTime
     lastTime = timeStamp
     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    gameInstance.update(deltaTime)
-    gameInstance.draw(ctx)
+    game.update(deltaTime)
+    game.draw(ctx)
     requestAnimationFrame(animate)
   }
 

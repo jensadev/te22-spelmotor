@@ -5,7 +5,7 @@ import UserInterface from "../user-interface.js"
 
 export default class LevelOneScene extends Scene {
     constructor(game) {
-        super(game)
+        super(game, true) // Enable pause functionality
         
         this.player = new Player(
             this.game,
@@ -45,14 +45,26 @@ export default class LevelOneScene extends Scene {
         this.elapsedTime = 0
         this.gameOver = false
         this.gameOverTimer = 0
+        this.paused = false
+        this.keyPressed = false
     }
 
     update(deltaTime) {
+        // Handle pause input using base Scene functionality
+        if (this.handlePauseInput()) {
+            return // Pause input was handled, don't continue with game logic
+        }
+
         if (this.gameOver) {
             this.gameOverTimer += deltaTime
             if (this.gameOverTimer >= this.gameOverDelay) {
                 this.game.sceneManager.changeScene("menu")
             }
+            return
+        }
+
+        // Don't update game logic if paused
+        if (this.paused) {
             return
         }
 
@@ -106,6 +118,9 @@ export default class LevelOneScene extends Scene {
             enemy.draw(ctx)
         })
         this.ui.draw(ctx)
+
+        // Draw pause overlay using base Scene functionality
+        this.drawPauseOverlay(ctx)
 
         // Draw game over screen
         if (this.gameOver) {
