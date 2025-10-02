@@ -1,7 +1,6 @@
 export default class UserInterface {
   constructor(game) {
     this.game = game
-
     this.flashTime = 0
   }
 
@@ -20,17 +19,21 @@ export default class UserInterface {
       ctx.fillRect(0, 0, this.game.width, this.game.height)
     }
 
-    ctx.fillStyle = "white"
-    ctx.font = "20px Arial"
-    ctx.fillText(`Score: ${this.game.score}`, 20, 40)
+    // Get current scene for data
+    const currentScene = this.game.sceneManager.currentScene
+    if (!currentScene) return
 
     ctx.fillStyle = "white"
     ctx.font = "20px Arial"
-    ctx.fillText(`Time: ${this.game.elapsedTime.toFixed(1)}s`, 20, 70)
+    ctx.fillText(`Score: ${currentScene.score || 0}`, 20, 40)
 
     ctx.fillStyle = "white"
     ctx.font = "20px Arial"
-    ctx.fillText(`Health: ${this.game.player.health}`, 20, 100)
+    ctx.fillText(`Time: ${(currentScene.elapsedTime || 0).toFixed(1)}s`, 20, 70)
+
+    ctx.fillStyle = "white"
+    ctx.font = "20px Arial"
+    ctx.fillText(`Health: ${currentScene.player ? currentScene.player.health : 0}`, 20, 100)
   }
 
   triggerFlash(duration) {
