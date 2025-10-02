@@ -6,11 +6,17 @@ export default class Player extends GameObject {
         super(x, y, width, height)
         this.game = game
         this.speedX = 0
+        this.speedY = 0
+        this.maxSpeedY = 0.4
         this.maxSpeedX = 0.4
         this.health = 100
 
         this.attackDelay = 0
         this.attackInterval = 100
+        
+        // Damage visual effect properties
+        this.damageFlashTime = 0
+        this.damageFlashDuration = 200 // 200ms flash duration
     }
 
     update(deltaTime) {
@@ -20,6 +26,14 @@ export default class Player extends GameObject {
             this.speedX += this.maxSpeedX
         } else {
             this.speedX = 0
+        }
+
+        if (this.game.input.keys.has("ArrowUp")) {
+            this.speedY -= this.maxSpeedY
+        } else if (this.game.input.keys.has("ArrowDown")) {
+            this.speedY += this.maxSpeedY
+        } else {
+            this.speedY = 0
         }
 
         if (this.game.input.keys.has(" ")) {
@@ -36,9 +50,40 @@ export default class Player extends GameObject {
             this.speedX = 0
         }
 
+        this.y += this.speedY
+        if (this.y < 0) {
+            this.y = 0
+            this.speedY = 0
+        }
+        if (this.y + this.height > this.game.height) {
+            this.y = this.game.height - this.height
+            this.speedY = 0
+        }
+
+
         if (this.attackDelay > 0) {
             this.attackDelay -= deltaTime
         }
+        
+        // Update damage flash effect
+        if (this.damageFlashTime > 0) {
+            this.damageFlashTime -= deltaTime
+            if (this.damageFlashTime < 0) {
+                this.damageFlashTime = 0
+            }
+        }
+    }
+
+    draw(ctx) {
+        // Apply damage flash effect - simple color change
+        if (this.damageFlashTime > 0) {
+            ctx.fillStyle = "red"
+        } else {
+            ctx.fillStyle = this.color
+        }
+        
+        // Draw the player rectangle
+        ctx.fillRect(this.x, this.y, this.width, this.height)
     }
 
     attack() {
@@ -64,7 +109,11 @@ export default class Player extends GameObject {
     takeDamage(damage) {
         this.health -= damage
         
-        // Get the current scene and trigger flash on its UI
+        // Trigger damage flash effect
+        this.damageFlashTime = this.damageFlashDuration
+        
+        // Använd currentScene för att flasha skärmen
+        // Detta visar hur vi kan styra visualla effekter från spelobjekt
         const currentScene = this.game.sceneManager.currentScene
         if (currentScene && currentScene.ui) {
             currentScene.ui.triggerFlash()

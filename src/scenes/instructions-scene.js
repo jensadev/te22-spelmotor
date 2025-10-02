@@ -27,47 +27,43 @@ export default class InstructionsScene extends Scene {
 
         // Draw title
         ctx.fillStyle = "#ffffff"
-        ctx.font = "36px Arial"
+        ctx.font = "28px Arial"
         ctx.textAlign = "center"
         ctx.fillText("INSTRUCTIONS", this.game.width / 2, this.game.height / 6)
 
         // Draw instructions
         ctx.fillStyle = "#cccccc"
-        ctx.font = "20px Arial"
+        ctx.font = "16px Arial"
         
         const instructions = [
             "CONTROLS:",
-            "",
             "← → Arrow Keys - Move left/right",
             "SPACEBAR - Shoot projectiles",
             "ESC - Pause/Resume game",
             "M - Return to menu (when paused)",
-            "",
+            "å - Toggle debug mode",
             "OBJECTIVE:",
-            "",
             "• Destroy incoming enemies",
             "• Avoid enemy collisions",
             "• Survive as long as possible",
             "• Achieve the highest score!",
-            "",
             "SCORING:",
-            "",
             "• +10 points per enemy destroyed",
             "• -10 health per enemy collision",
             "• Game over when health reaches 0"
         ]
 
         instructions.forEach((line, index) => {
-            const y = this.game.height / 4 + index * 25
+            const y = this.game.height / 4 + index * 22
             if (line === "CONTROLS:" || line === "OBJECTIVE:" || line === "SCORING:") {
                 ctx.fillStyle = "#646cff"
-                ctx.font = "22px Arial"
+                ctx.font = "18px Arial"
             } else if (line.startsWith("•")) {
                 ctx.fillStyle = "#ffffff"
-                ctx.font = "18px Arial"
+                ctx.font = "15px Arial"
             } else {
                 ctx.fillStyle = "#cccccc"
-                ctx.font = "20px Arial"
+                ctx.font = "16px Arial"
             }
             ctx.fillText(line, this.game.width / 2, y)
         })
