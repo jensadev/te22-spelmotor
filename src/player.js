@@ -10,6 +10,7 @@ export default class Player extends GameObject {
         this.maxSpeedY = 0.4
         this.maxSpeedX = 0.4
         this.health = 100
+        this.maxHealth = 120
 
         this.attackDelay = 0
         this.attackInterval = 100
@@ -104,6 +105,15 @@ export default class Player extends GameObject {
                 )
             )
         }
+    }
+
+    addHealth(amount) {
+        this.health += amount
+        // Cap health at maxHealth
+        if (this.health > this.maxHealth) {
+            this.health = this.maxHealth
+        }
+        console.log(`Health restored: +${amount} (Total: ${this.health})`)
     }
 
     takeDamage(damage) {

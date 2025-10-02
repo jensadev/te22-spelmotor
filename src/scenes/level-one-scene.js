@@ -2,6 +2,7 @@ import Scene from "../scene.js"
 import Player from "../player.js"
 import Enemy from "../enemy.js"
 import UserInterface from "../user-interface.js"
+import Powerup from "../powerup.js"
 
 export default class LevelOneScene extends Scene {
     constructor(game) {
@@ -16,10 +17,13 @@ export default class LevelOneScene extends Scene {
         )
         this.projectiles = []
         this.enemies = []
+        this.powerups = []
 
         this.ui = new UserInterface(this.game)
         this.score = 0
         this.elapsedTime = 0
+        this.enemiesKilled = 0
+        this.nextPowerupThreshold = 10 + Math.floor(Math.random() * 11) // Random 10-20
 
         this.gameOver = false
         this.gameOverTimer = 0
@@ -39,10 +43,13 @@ export default class LevelOneScene extends Scene {
         // Clear arrays
         this.projectiles = []
         this.enemies = []
+        this.powerups = []
 
         // Reset game state
         this.score = 0
         this.elapsedTime = 0
+        this.enemiesKilled = 0
+        this.nextPowerupThreshold = 10 + Math.floor(Math.random() * 11) // Random 10-20
         this.gameOver = false
         this.gameOverTimer = 0
         this.paused = false
@@ -75,6 +82,9 @@ export default class LevelOneScene extends Scene {
         this.projectiles.forEach((projectile) => {
             projectile.update(deltaTime)
         })
+        this.powerups.forEach((powerup) => {
+            powerup.update(deltaTime)
+        })
         
         // Spawn enemies randomly
         if (Math.random() < 0.06) {
@@ -82,6 +92,21 @@ export default class LevelOneScene extends Scene {
             this.enemies.push(
                 new Enemy(this.game, Math.random() * (this.game.width - 32), 0, 32, 32),
             )
+        }
+
+        // Spawn powerups based on enemies killed or random chance
+        if ((this.enemiesKilled >= this.nextPowerupThreshold) || 
+            Math.random() < 0.001) { // 0.1% chance per frame
+            this.powerups.push(
+                new Powerup(this.game, Math.random() * (this.game.width - 20), 0, 20, 20)
+            )
+            // Reset the threshold for next powerup
+            if (this.enemiesKilled >= this.nextPowerupThreshold) {
+                this.nextPowerupThreshold = this.enemiesKilled + 10 + Math.floor(Math.random() * 11)
+                console.log(`Powerup spawned! Next powerup at ${this.nextPowerupThreshold} kills`)
+            } else {
+                console.log("Random powerup spawned!")
+            }
         }
 
         // Update enemies and check collision with player
@@ -98,15 +123,26 @@ export default class LevelOneScene extends Scene {
             this.enemies.forEach((enemy) => {
                 if (projectile.checkCollision(enemy)) {
                     this.score += 10
+                    this.enemiesKilled += 1
                     projectile.markedForDeletion = true
                     enemy.markedForDeletion = true
                 }
             })
         })
+
+        // Check player-powerup collisions
+        this.powerups.forEach((powerup) => {
+            if (powerup.checkCollision(this.player)) {
+                this.player.addHealth(10)
+                powerup.markedForDeletion = true
+                console.log("Powerup collected!")
+            }
+        })
         
         // Clean up marked objects
         this.projectiles = this.projectiles.filter((p) => !p.markedForDeletion)
         this.enemies = this.enemies.filter((e) => !e.markedForDeletion)
+        this.powerups = this.powerups.filter((p) => !p.markedForDeletion)
     }
 
     draw(ctx) {
@@ -116,6 +152,9 @@ export default class LevelOneScene extends Scene {
         })
         this.enemies.forEach((enemy) => {
             enemy.draw(ctx)
+        })
+        this.powerups.forEach((powerup) => {
+            powerup.draw(ctx)
         })
         this.ui.draw(ctx)
 
