@@ -1,6 +1,7 @@
 import MenuScene from "./scenes/menu-scene.js"
 import LevelOneScene from "./scenes/level-one-scene.js"
 import InstructionsScene from "./scenes/instructions-scene.js"
+import LevelTwoScene from "./scenes/level-two-scene.js"
 
 export default class SceneManager {
     constructor(game) {
@@ -12,6 +13,7 @@ export default class SceneManager {
         this.scenes.menu = new MenuScene(this.game)
         this.scenes.levelOne = new LevelOneScene(this.game)
         this.scenes.instructions = new InstructionsScene(this.game)
+        this.scenes.levelTwo = new LevelTwoScene(this.game)
         
         // Start with menu
         this.changeScene("menu")
@@ -22,7 +24,7 @@ export default class SceneManager {
             this.currentScene = this.scenes[sceneName]
             
             // Reset the scene if it has a reset method (useful for game scenes)
-            if (sceneName === "levelOne" && this.currentScene.reset) {
+            if ((sceneName === "levelOne" || sceneName === "levelTwo") && this.currentScene.reset) {
                 this.currentScene.reset()
             }
             
