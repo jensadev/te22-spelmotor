@@ -6,9 +6,11 @@ export default class Game {
         this.width = width
         this.height = height
         this.input = new Input()
-        
-        // Initialize scene manager
         this.sceneManager = new SceneManager(this)
+        
+        // Add persistent game state
+        this.totalScore = 0
+        this.currentLevel = 1
     }
 
     update(deltaTime) {
@@ -17,5 +19,18 @@ export default class Game {
 
     draw(ctx) {
         this.sceneManager.draw(ctx)
+    }
+
+    addScore(points) {
+        this.totalScore += points
+    }
+
+    nextLevel() {
+        this.currentLevel++
+    }
+
+    resetGame() {
+        this.totalScore = 0
+        this.currentLevel = 1
     }
 }

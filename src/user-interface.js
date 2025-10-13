@@ -25,28 +25,25 @@ export default class UserInterface {
   }
 
   draw(ctx) {
+    const currentScene = this.game.sceneManager.currentScene
+
+    // Flash effect
     if (this.flashTime > 0) {
       ctx.fillStyle = "rgba(255, 255, 255, 1)"
       ctx.fillRect(0, 0, this.game.width, this.game.height)
     }
 
-    // Get current scene for data
-    const currentScene = this.game.sceneManager.currentScene
-    if (!currentScene) return
+    // Game UI
+    if (currentScene && currentScene.levelScore !== undefined) {
+      ctx.fillStyle = "#ffffff"
+      ctx.font = "18px Arial"
+      ctx.fillText(`Level: ${currentScene.levelScore}`, 20, 30)
+      ctx.fillText(`Total: ${this.game.totalScore}`, 20, 50)
+      ctx.fillText(`Health: ${currentScene.player.health}`, 20, 70)
+      ctx.fillText(`Time: ${currentScene.elapsedTime.toFixed(1)}s`, 20, 90)
+    }
 
-    ctx.fillStyle = "white"
-    ctx.font = "20px Arial"
-    ctx.fillText(`Score: ${currentScene.score || 0}`, 20, 40)
-
-    ctx.fillStyle = "white"
-    ctx.font = "20px Arial"
-    ctx.fillText(`Time: ${(currentScene.elapsedTime || 0).toFixed(1)}s`, 20, 70)
-
-    ctx.fillStyle = "white"
-    ctx.font = "20px Arial"
-    ctx.fillText(`Health: ${currentScene.player ? currentScene.player.health : 0}`, 20, 100)
-
-    // Draw debug information
+    // Debug mode
     if (this.debugMode) {
       this.drawDebugInfo(ctx, currentScene)
     }
