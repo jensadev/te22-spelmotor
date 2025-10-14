@@ -7,6 +7,9 @@ export default class Enemy extends GameObject {
     this.color = "red"
     this.speedY = 0.5 + Math.random() * 2
     this.markedForDeletion = false
+    this.score = 10
+    this.damage = 10
+    this.health = 10
   }
 
   update(deltaTime) {
@@ -15,7 +18,7 @@ export default class Enemy extends GameObject {
       // Get player from current scene
       const currentScene = this.game.sceneManager.currentScene
       if (currentScene && currentScene.player) {
-        currentScene.player.takeDamage(10)
+        currentScene.player.takeDamage(this.damage)
       }
       this.markedForDeletion = true
     }

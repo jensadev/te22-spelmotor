@@ -149,9 +149,14 @@ export default class GameplayScene extends Scene {
         this.projectiles.forEach(projectile => {
             this.enemies.forEach(enemy => {
                 if (projectile.checkCollision(enemy)) {
+                    enemy.health -= this.player.damage
+                    if (enemy.health > 0) {
+                        projectile.markedForDeletion = true
+                        return
+                    }
                     projectile.markedForDeletion = true
                     enemy.markedForDeletion = true
-                    this.addScore(100)
+                    this.addScore(enemy.score)
                     this.enemiesKilled++
                 }
             })

@@ -12,8 +12,9 @@ export default class Player extends GameObject {
         this.health = 100
         this.maxHealth = 120
 
-        this.attackDelay = 0
+        this.attackDelay = 1
         this.attackInterval = 100
+        this.damage = 5
         
         // Damage visual effect properties
         this.damageFlashTime = 0
